@@ -12,7 +12,6 @@ function setup() {
 
   // 建立與視訊畫面相同大小的圖形內容
   overlayGraphics = createGraphics(capture.width, capture.height);
-  drawOverlayGraphics(); // 繪製 overlayGraphics 的內容
 }
 
 function draw() {
@@ -22,11 +21,14 @@ function draw() {
   let x = (width - capture.width) / 2;
   let y = (height - capture.height) / 2;
 
+  // 更新 overlayGraphics 的內容
+  drawOverlayGraphics();
+
   // 顯示攝影機影像，並水平翻轉
   push();
   translate(width, 0);
   scale(-1, 1);
- // image(capture, x, y, capture.width, capture.height);
+  image(capture, x, y, capture.width, capture.height);
   pop();
 
   // 在視訊畫面上方顯示 overlayGraphics
@@ -37,7 +39,6 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight); // 當視窗大小改變時調整畫布大小
   capture.size(width * 0.8, height * 0.8); // 重新設定影像大小
   overlayGraphics = createGraphics(capture.width, capture.height); // 重新建立 overlayGraphics
-  drawOverlayGraphics(); // 重新繪製 overlayGraphics 的內容
 }
 
 function drawOverlayGraphics() {
