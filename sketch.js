@@ -1,4 +1,5 @@
 let capture;
+let overlayGraphics;
 
 function setup() {
   createCanvas(windowWidth, windowHeight); // 設定畫布為全螢幕
@@ -8,23 +9,37 @@ function setup() {
   capture = createCapture(VIDEO);
   capture.size(width * 0.8, height * 0.8); // 設定影像寬高為視窗大小的 80%
   capture.hide(); // 隱藏原始的攝影機影像
+
+  // 建立與視訊畫面相同大小的圖形內容
+  overlayGraphics = createGraphics(capture.width, capture.height);
+  overlayGraphics.fill(255, 0, 0, 150); // 設定填充顏色為半透明紅色
+  overlayGraphics.noStroke();
+  overlayGraphics.ellipse(overlayGraphics.width / 2, overlayGraphics.height / 2, 100, 100); // 繪製一個圓形
 }
 
 function draw() {
   background('#efcfe3'); // 每次重繪時設定背景顏色
 
-  // 將攝影機影像顯示在畫布中央，並水平翻轉
+  // 計算視訊畫面的位置
   let x = (width - capture.width) / 2;
   let y = (height - capture.height) / 2;
 
-  push(); // 儲存當前繪圖設定
-  translate(width, 0); // 將原點移動到畫布右上角
-  scale(-1, 1); // 水平翻轉畫布
-  image(capture, x, y, capture.width, capture.height); // 繪製翻轉後的影像
-  pop(); // 恢復繪圖設定
+  // 顯示攝影機影像，並水平翻轉
+  push();
+  translate(width, 0);
+  scale(-1, 1);
+  image(capture, x, y, capture.width, capture.height);
+  pop();
+
+  // 在視訊畫面上方顯示 overlayGraphics
+  image(overlayGraphics, x, y, capture.width, capture.height);
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight); // 當視窗大小改變時調整畫布大小
   capture.size(width * 0.8, height * 0.8); // 重新設定影像大小
+  overlayGraphics = createGraphics(capture.width, capture.height); // 重新建立 overlayGraphics
+  overlayGraphics.fill(255, 0, 0, 150); // 設定填充顏色為半透明紅色
+  overlayGraphics.noStroke();
+  overlayGraphics.ellipse(overlayGraphics.width / 2, overlayGraphics.height / 2, 100, 100); // 繪製一個圓形
 }
