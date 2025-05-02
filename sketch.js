@@ -32,7 +32,7 @@ function draw() {
   pop();
 
   // 在視訊畫面上方顯示 overlayGraphics
-  image(overlayGraphics, x, y, capture.width, capture.height);
+  //image(overlayGraphics, x, y, capture.width, capture.height);
 }
 
 function windowResized() {
