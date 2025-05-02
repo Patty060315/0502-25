@@ -13,10 +13,15 @@ function setup() {
 function draw() {
   background('#efcfe3'); // 每次重繪時設定背景顏色
 
-  // 將攝影機影像顯示在畫布中央
+  // 將攝影機影像顯示在畫布中央，並水平翻轉
   let x = (width - capture.width) / 2;
   let y = (height - capture.height) / 2;
-  image(capture, x, y, capture.width, capture.height);
+
+  push(); // 儲存當前繪圖設定
+  translate(width, 0); // 將原點移動到畫布右上角
+  scale(-1, 1); // 水平翻轉畫布
+  image(capture, x, y, capture.width, capture.height); // 繪製翻轉後的影像
+  pop(); // 恢復繪圖設定
 }
 
 function windowResized() {
