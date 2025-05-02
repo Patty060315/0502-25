@@ -23,11 +23,11 @@ function draw() {
   let y = (height - capture.height) / 2;
 
   // 顯示攝影機影像，並水平翻轉
-  push();
-  translate(width, 0);
-  scale(-1, 1);
-  image(capture, x, y, capture.width, capture.height);
-  pop();
+  //push();
+  //translate(width, 0);
+  //scale(-1, 1);
+  //image(capture, x, y, capture.width, capture.height);
+  //pop();
 
   // 在視訊畫面上方顯示 overlayGraphics
   image(overlayGraphics, x, y, capture.width, capture.height);
