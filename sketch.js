@@ -8,7 +8,7 @@ function setup() {
   // 初始化攝影機擷取
   capture = createCapture(VIDEO);
   capture.size(width * 0.8, height * 0.8); // 設定影像寬高為視窗大小的 80%
-  // capture.hide(); // 暫時註解掉以檢查影像是否正常
+  capture.hide(); // 隱藏原始的攝影機影像
 
   // 建立與視訊畫面相同大小的圖形內容
   overlayGraphics = createGraphics(capture.width, capture.height);
@@ -23,11 +23,11 @@ function draw() {
   let y = (height - capture.height) / 2;
 
   // 顯示攝影機影像，並水平翻轉
-  //push();
-  //translate(width, 0);
-  //scale(-1, 1);
-  //image(capture, x, y, capture.width, capture.height);
-  //pop();
+  push();
+  translate(width, 0);
+  scale(-1, 1);
+ // image(capture, x, y, capture.width, capture.height);
+  pop();
 
   // 在視訊畫面上方顯示 overlayGraphics
   image(overlayGraphics, x, y, capture.width, capture.height);
@@ -44,16 +44,13 @@ function drawOverlayGraphics() {
   overlayGraphics.background(0); // 設定背景為黑色
   overlayGraphics.noStroke();
 
-  // 確保攝影機影像已準備好
-  if (capture.loadedmetadata) {
-    // 每隔 20 單位繪製一個圓
-    for (let y = 0; y < overlayGraphics.height; y += 20) {
-      for (let x = 0; x < overlayGraphics.width; x += 20) {
-        // 從 capture 中取樣顏色
-        let col = capture.get(x, y);
-        overlayGraphics.fill(col); // 設定圓的顏色
-        overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 繪製圓形，中心點偏移 10
-      }
+  // 每隔 20 單位繪製一個圓
+  for (let y = 0; y < overlayGraphics.height; y += 20) {
+    for (let x = 0; x < overlayGraphics.width; x += 20) {
+      // 從 capture 中取樣顏色
+      let col = capture.get(x, y);
+      overlayGraphics.fill(col); // 設定圓的顏色
+      overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 繪製圓形，中心點偏移 10
     }
   }
 }
